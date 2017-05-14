@@ -46,36 +46,111 @@
 #define WRXDATA    0b00101110U
 #define RUDADATA   0b00110000U
 #define WUDADATA   0b00100010U
-/* Registers */
-#define ETXSTL
-#define ETXSTH
-#define ETXLENL
-#define ETXLENH
-#define ERXSTL
-#define ERXSTH
-#define ERXTAILL
-#define ERXTAILH
-#define ERXHEADL
-#define ERXHEADH
-#define EDMASTL
-#define EDMASTH
-#define EDMALENL
-#define EDAMLENH
-#define EDMADSTL
-#define EDMADSTH
-#define EDMACSL
-#define EDMACSH
-#define ETXSTATL
-#define ETXSTATH
-#define ETXWIREL
-#define ETXWRIEH
-#define EUDASTL
-#define EUDASTH
-#define EUDANDL
-#define EUDANDH
-#define ESTATL
-#define ESTATH
-#define EIRL
-#define EIRH
-#define ECON1L
-#define ECON1H
+/* Unbanked registers */
+#define ETXSTL    0x00U
+#define ETXSTH    0x01U
+#define ETXLENL   0x02U
+#define ETXLENH   0x03U
+#define ERXSTL    0x04U
+#define ERXSTH    0x05U
+#define ERXTAILL  0x06U
+#define ERXTAILH  0x07U
+#define ERXHEADL  0x08U
+#define ERXHEADH  0x09U
+#define EDMASTL   0x0AU
+#define EDMASTH   0x0BU
+#define EDMALENL  0x0CU
+#define EDAMLENH  0x0DU
+#define EDMADSTL  0x0EU
+#define EDMADSTH  0x0FU
+#define EDMACSL   0x10U
+#define EDMACSH   0x11U
+#define ETXSTATL  0x12U
+#define ETXSTATH  0x13U
+#define ETXWIREL  0x14U
+#define ETXWIREH  0x15U
+#define EUDASTL   0x16U
+#define EUDASTH   0x17U
+#define EUDANDL   0x18U
+#define EUDANDH   0x19U
+#define ESTATL    0x1AU
+#define ESTATH    0x1BU
+#define EIRL      0x1CU
+#define EIRH      0x1DU
+#define ECON1L    0x1EU
+#define ECON1H    0x1FU
+#define EHT1L     0x20U
+#define EHT1H     0x21U
+#define EHT2L     0x22U
+#define EHT2H     0x23U
+#define EHT3L     0x24U
+#define EHT3H     0x25U
+#define EHT4L     0x26U
+#define EHT4H     0x27U
+#define EPMM1L    0x28U
+#define EPMM1H    0x29U
+#define EPMM2L    0x2AU
+#define EPMM2H    0x2BU
+#define EPMM3L    0x2CU
+#define EPMM3H    0x2DU
+#define EPMM4L    0x2EU
+#define EPMM4H    0x2FU
+#define EPMCSL    0x30U
+#define EPMCSH    0x31U
+#define EPMOL     0x32U
+#define EPMOH     0x33U
+#define ERXFCONL  0x34U
+#define ERXFCONH  0x35U
+#define MACON1L   0x40U
+#define MACON1H   0x41U
+#define MACON2L   0x42U
+#define MACON2H   0x43U
+#define MABBIPGL  0x44U
+#define MABBIPGH  0x45U
+#define MAIPGL    0x46U
+#define MAIPGH    0x47U
+#define MACLCONL  0x48U
+#define MACLCONH  0x49U
+#define MAMXFLL   0x4AU
+#define MAMXFLH   0x4BU
+#define MICMDL    0x52U
+#define MICMDH    0x53U
+#define MIREGADRL 0x54U
+#define MIREGADRH 0x55U
+#define MAADR3L   0x60U
+#define MAADR3H   0x61U
+#define MAADR2L   0x62U
+#define MAADR2H   0x63U
+#define MAADR1L   0x64U
+#define MAADR1H   0x65U
+#define MIWRL     0x66U
+#define MIWRH     0x67U
+#define MIRDL     0x68U
+#define MIRDH     0x69U
+#define MISTATL   0x6AU
+#define MISTATH   0x6BU
+#define EPAUSL    0x6CU
+#define EPAUSH    0x6DU
+#define ECON2L    0x6EU
+#define ECON2H    0x6FU
+#define ERXWML    0x70U
+#define ERXWMH    0x71U
+#define EIEL      0x72U
+#define EIEH      0x73U
+#define EIDLEDL   0x74U
+#define EIDLEDH   0x75U
+#define EGPDATA   0x80U
+#define ERXDATA   0x82U
+#define EUDADATA  0x84U
+#define EGPRDPTL  0x86U
+#define EGPRDPTH  0x87U
+#define EGPWRPTL  0x88U
+#define EGPWRPTH  0x89U
+#define ERXRDPTL  0x8AU
+#define ERXRDPTH  0x8BU
+#define ERXWRPTL  0x8CU
+#define ERXWRPTH  0x8DU
+#define EUDARDPTL 0x8EU
+#define EUDARDPTH 0x8FU
+#define EUDAWRPTL 0x90U
+#define EUDAWRPTH 0x91U
