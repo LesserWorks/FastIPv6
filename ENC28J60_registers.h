@@ -10,13 +10,14 @@
 #define ENCSCK 7
 #define SS_low PORTB &= ~(1 << ENCSS)
 #define SS_high PORTB |= 1 << ENCSS
-#define RCR(address) (address)
-#define RBM (0b00111010U)
-#define WCR(address) ((0b01000000U) | (address))
-#define WBM (0b01111010U)
-#define BFS(address) ((0b10000000U) | (address))
-#define BFC(address) ((0b10100000U) | (address))
-#define SRC (0b11111111U)
+/* SPI opcodes */
+#define RCR(address) (0b00011111U & (address))
+#define RBM 0b00111010U
+#define WCR(address) ((0b00011111U & (address)) | 0b01000000U)
+#define WBM 0b01111010U
+#define BFS(address) ((0b00011111U & (address)) | 0b10000000U)
+#define BFC(address) ((0b00011111U & (address)) | 0b10100000U)
+#define SRC 0b11111111U
 
 /* PHY registers */
 #define PHCON1 0x00U
