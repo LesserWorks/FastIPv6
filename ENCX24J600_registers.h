@@ -46,3 +46,36 @@
 #define WRXDATA    0b00101110U
 #define RUDADATA   0b00110000U
 #define WUDADATA   0b00100010U
+/* Registers */
+#define ETXSTL
+#define ETXSTH
+#define ETXLENL
+#define ETXLENH
+#define ERXSTL
+#define ERXSTH
+#define ERXTAILL
+#define ERXTAILH
+#define ERXHEADL
+#define ERXHEADH
+#define EDMASTL
+#define EDMASTH
+#define EDMALENL
+#define EDAMLENH
+#define EDMADSTL
+#define EDMADSTH
+#define EDMACSL
+#define EDMACSH
+#define ETXSTATL
+#define ETXSTATH
+#define ETXWIREL
+#define ETXWRIEH
+#define EUDASTL
+#define EUDASTH
+#define EUDANDL
+#define EUDANDH
+#define ESTATL
+#define ESTATH
+#define EIRL
+#define EIRH
+#define ECON1L
+#define ECON1H
