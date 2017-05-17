@@ -3,11 +3,7 @@
 #define enableInt controlReg |= 1 << enableBit
 #define disableInt controlReg &= ~(1 << enableBit)
 
-#define ENCreset 3
-#define ENCMISO 6
-#define ENCMOSI 5
-#define ENCSS 4
-#define ENCSCK 7
+
 #define SS_low PORTB &= ~(1 << ENCSS)
 #define SS_high PORTB |= 1 << ENCSS
 /* SPI opcodes */
