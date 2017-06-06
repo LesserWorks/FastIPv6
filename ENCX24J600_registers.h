@@ -46,7 +46,7 @@
 #define WRXDATA    0b00101110U
 #define RUDADATA   0b00110000U
 #define WUDADATA   0b00100010U
-/* Unbanked registers */
+/* Unbanked SPI registers */
 #define ETXSTL    0x00U
 #define ETXSTH    0x01U
 #define ETXLENL   0x02U
@@ -155,7 +155,189 @@
 #define EUDAWRPTL 0x90U
 #define EUDAWRPTH 0x91U
 
-/* Bit defines */
+/* Bit defines fro 16 bit registers */
+// ESTAT
+#define PKTCNT0 0U
+#define PKTCNT1 1U
+#define PKTCNT2 2U
+#define PKTCNT3 3U
+#define PKTCNT4 4U
+#define PKTCNT5 5U
+#define PKTCNT6 6U
+#define PKTCNT7 7U
+#define PHYLNK 8U
+#define PHYDPX 10U
+#define CLKRDY 12U
+#define RXBUSY 13U
+#define FCIDLE 14U
+#define INT 15U
+// EIR
+#define PCFULIF 0U
+#define RXABTIF 1U
+#define TXABTIF 2U
+#define TXIF 3U
+#define DMAIF 5U
+#define PKTIF 6U
+#define LINKIF 11U
+#define AESIF 12U
+#define HASHIF 13U
+#define MODEXIF 14U
+#define CRYPTEN 15U
+// ECON1
+#define RXEN 0U
+#define TXRTS 1U
+#define DMANOCS 2U
+#define DMACSSD 3U
+#define DMACPY 4U
+#define DMAST 5U
+#define FCOP0 6U
+#define FCOP1 7U
+#define PKTDEC 8U
+#define AESOP0 9U
+#define AESOP1 10U
+#define AESST 11U
+#define HASTLST 12U
+#define HASHOP 13U
+#define HASHEN 14U
+#define MODEXST 15U
+// ETXSTAT
+#define COLCNT0 0U
+#define COLCNT1 1U
+#define COLCNT2 2U
+#define COLCNT2 2U
+#define CRCBAD 4U
+#define DEFER 7U
+#define EXDEFER 8U
+#define MAXCOL 9U
+#define LATECOL 10U
+// ERXFCON
+#define BCEN 0U
+#define MCEN 1U
+#define NOTMEEN 2U
+#define UCEN 3U
+#define RUNTEN 4U
+#define RENTEEN 5U
+#define CRCEN 6U
+#define CRCEEN 7U
+#define PMEN0 8U
+#define PMEN1 9U
+#define PMEN2 10U
+#define PMEN3 11U
+#define NOTPM 12U
+#define MPEN 14U
+#define HTEN 15U
+// MACON1
+#define PASSALL 1U
+#define RXPAUS 2U
+#define LOOPBK 4U
+// MACON2
+#define FULFPX 0U
+#define HFRMEN 2U
+#define PHDREN 3U
+#define TXCRCEN 4U
+#define PADCFG0 5U
+#define PADCFG1 6U
+#define PADCFG2 7U
+#define NOBKOFF 12U
+#define BPEN 13U
+#define DEFER 14U
+// MABBIPG
+#define BBIPG0 0U
+#define BBIPG1 1U
+#define BBIPG2 2U
+#define BBIPG3 3U
+#define BBIPG4 4U
+#define BBIPG5 5U
+#define BBIPG6 6U
+// MAIPG
+#define IPG0 0U
+#define IPG1 1U
+#define IPG2 2U
+#define IPG3 3U
+#define IPG4 4U
+#define IPG5 5U
+#define IPG6 6U
+// MACLCON
+#define MAXRET0 0U
+#define MAXRET1 1U
+#define MAXRET2 2U
+#define MAXRET3 3U
+// MICMD
+#define MIIRD 0U
+#define MIISCAN 1U
+// MIREGADR
+#define PHREG0 0U
+#define PHREG1 1U
+#define PHREG2 2U
+#define PHREG3 3U
+#define PHREG4 4U
+// MISTAT
+#define BUSY 0U
+#define SCAN 1U
+#define NVALID 2U
+// ECON2
+#define AESLEN0 0U
+#define AESLEN1 1U
+#define MODLEN0 2U
+#define MODLEN1 3U
+#define ETHRST 4U
+#define RXRST 5U
+#define TXRST 6U
+#define AUTOFC 7U
+#define COCON0 8U
+#define COCON1 9U
+#define COCON2 10U
+#define COCON3 11U
+#define SHA1MD5 12U
+#define TXMAC 13U
+#define STRCH 14U
+#define ETHEN 15U
+// ERXWM
+#define RXEWM0 0U
+#define RXEWM1 1U
+#define RXEWM2 2U
+#define RXEWM3 3U
+#define RXEWM4 4U
+#define RXEWM5 5U
+#define RXEWM6 6U
+#define RXEWM7 7U
+#define RXFWM0 8U
+#define RXFWM1 9U
+#define RXFWM2 10U
+#define RXFWM3 11U
+#define RXFWM4 12U
+#define RXFWM5 13U
+#define RXFWM6 14U
+#define RXFWM7 15U
+// EIE
+#define PCFULIE 0U
+#define RXABTIE 1U
+#define TXABTIE 2U
+#define TXIE 3U
+#define DMAIE 5U
+#define PKTIE 6U
+#define LINKIE 11U
+#define AESIE 12U
+#define HASHIE 13U
+#define MODEXIE 14U
+#define INTIE 15U
+// EIDLED
+#define REVID0 0U
+#define REVID1 1U
+#define REVID2 2U
+#define REVID3 3U
+#define REVID4 4U
+#define DEVID0 5U
+#define DEVID1 6U
+#define DEVID2 7U
+#define LBCFG0 8U
+#define LBCFG1 9U
+#define LBCFG2 10U
+#define LBCFG3 11U
+#define LACFG0 12U
+#define LACFG1 13U
+#define LACFG2 14U
+#define LACFG3 15U
 // PHCON1
 #define PFULDPX 8U
 #define RENEG   9U
