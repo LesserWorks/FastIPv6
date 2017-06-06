@@ -158,20 +158,20 @@
 /* Bit defines */
 // PHCON1
 #define PFULDPX 8U
-#define RENEG 9U
-#define PSLEEP 11U
-#define ANEN 12U
-#define SPD100 13U
+#define RENEG   9U
+#define PSLEEP  11U
+#define ANEN    12U
+#define SPD100  13U
 #define PLOOKBK 14U
-#define PRST 15U
+#define PRST    15U
 // PHSTAT1
 #define EXTREGS 0U
-#define LLSTAT 2U
-#define ANABLE 3U
+#define LLSTAT  2U
+#define ANABLE  3U
 #define LRFAULT 4U
-#define ANDONE 5U
-#define HALF10 11U
-#define FULL10 12U
+#define ANDONE  5U
+#define HALF10  11U
+#define FULL10  12U
 #define HALF100 13U
 #define FULL100 14U
 // PHANA
@@ -180,37 +180,37 @@
 #define ADIEEE2 2U
 #define ADIEEE3 3U
 #define ADIEEE4 4U
-#define AD10 5U
-#define AD10FD 6U
-#define AD100 7U
+#define AD10    5U
+#define AD10FD  6U
+#define AD100   7U
 #define AD100FD 8U
 #define ADPAUS0 10U
 #define ADPAUS1 11U
 #define ADFAULT 13U
-#define ADNP 15U
+#define ADNP    15U
 // PHANLPA
 #define LPIEEE0 0U
 #define LPIEEE1 1U
 #define LPIEEE2 2U
 #define LPIEEE3 3U
 #define LPIEEE4 4U
-#define LP10 5U
-#define LP10FD 6U
-#define LP100 7U
+#define LP10    5U
+#define LP10FD  6U
+#define LP100   7U
 #define LP100FD 8U
 #define LP100T4 9U
 #define LPPAUS0 10U
 #define LPPAUS1 11U
 #define LPFAULT 13U
-#define LPACK 14U
-#define LPNP 15U
+#define LPACK   14U
+#define LPNP    15U
 // PHANE
 #define LPANABL 0U
-#define LPARCD 1U
-#define PDFLT 4U
+#define LPARCD  1U
+#define PDFLT   4U
 // PHCON2
-#define EDSTAT 1U
-#define FRCLNK 2U
+#define EDSTAT  1U
+#define FRCLNK  2U
 #define EDTHRES 11U
 #define EDPWRDN 13U
 // PHSTAT2
