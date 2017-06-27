@@ -1,0 +1,7 @@
+#ifndef FASTIPV6_CONFIG_H
+  #define FASTIPV6_CONFIG_H
+
+//#define USE_ENC28J60
+//#define USE_ENCX24J600_SPI
+//#define USE_ENCX24J600_PARALLEL
+#endif /* FASTIPV6_CONFIG_H */
