@@ -44,7 +44,7 @@ extern uint8_t IPv6hardwareInit(void)
   indir(MACON2H) = 0;
   indir(MABBIPGL) = (1 << BBIPG4) | (1 << BBIPG2) | (1 << BBIPG0); // 0x15
   indir(MABBIPGH) = 0;
-  indir(MAIPGL) = (1 << IPG4) | (1 << IPG0); // 0x12
+  indir(MAIPGL) = (1 << IPG4) | (1 << IPG1); // 0x12
   indir(MAIPGH) = 0x0C;
   indir(MAMXFLL) = 1522 & 255; // Maximum frame size
   indir(MAMXFLH) = 1522 >> 8;
