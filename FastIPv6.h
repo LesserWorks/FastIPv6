@@ -1,8 +1,6 @@
 #ifndef FAST_IPv6_H // Include guard
-#define FAST_IPv6_H
-/* Uncomment ONE of the following depending on what ethernet controller you are using. */
-//#define USE_ENC28J60
-//#define USE_ENCX24J600
+  #define FAST_IPv6_H
+#include <FastIPv6_config.h>
 
 
 
