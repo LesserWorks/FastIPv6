@@ -3,8 +3,10 @@
   #include <ENC28J60_functions.h>
   #include <ENC28J60_registers.h>
 #else
+  #include <ENCX24J600_functions.h>
   #include <ENCX24J600_registers.h>
 #endif /* USE_ENC28J60 */
+#ifdef
 extern void solicitRouter(void) // Visible to other files
 {
   return;
