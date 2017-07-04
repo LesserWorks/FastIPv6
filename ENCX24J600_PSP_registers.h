@@ -1,4 +1,5 @@
-#define indir(register) (*((volatile uint8_t *)(register)))
+#define indir(addr) (*((volatile uint8_t *)(addr))) 
+// Casts to a pointer and finds the indirection of it
 
 /* Main registers */
 #define ETXSTL    0x7E00U
