@@ -10,6 +10,9 @@
   #include <ENCX24J600_PSP_functions.h>
   #include <ENCX24J600_PSP_registers.h>
 #endif /* USE_ENC28J60 */
+/* Global variables here */
+/*extern uint8_t myMACaddress[6] = {0, 0, 0, 0, 0, 0};
+extern uint8_t globalIPaddress*/
 #ifdef USE_ENC28J60
   // put functions definitions for ENC28J60 here
 #elif defined(ENCX24J600_SPI)
@@ -38,8 +41,11 @@ extern uint8_t IPv6hardwareInit(void)
   indir(EIDLEDH) = (1 << LACFG2) | (1 << LACFG1) | (1 << LBCFG1);
   indir(ERXSTL) = 4268 & 255; // About 7000 bytes for RX buffer
   indir(ERXSTH) = 4268 >> 8;
-  // Initialize receive filters here
+  indir(ERXFCONL) = (1 << MCEN) | (1 << RUNTEN) | (1 << CRCEN) | (1 << UCEN);
+  indir(ERXFCONH) = (1 << HTEN);
   // Initialize flow control here
+  indir(ERXWML) = 0; // How few 96 byte blocks must be filled to stop flow control
+  indir(ERXWMH) = 0; // How many 96 byte blocks must be filled to start flow control
   indir(MACON2L) = (1 << FULDPX) | (1 << 1) | (1 << TXCRCEN) | (1 << PADCFG2) | (1 << PADCFG0);
   indir(MACON2H) = 0;
   indir(MABBIPGL) = (1 << BBIPG4) | (1 << BBIPG2) | (1 << BBIPG0); // 0x15
@@ -52,5 +58,11 @@ extern uint8_t IPv6hardwareInit(void)
   WritePHY(PHCON1, (1 << ANEN) | (1 << PFULDPX), 0);
   WritePHY(PHANA, (1 << ADPAUS0) | (1 << AD100FD), (1 << AD100) | (1 << AD10FD) | (1 << AD10) | (1 << ADIEEE0)); // 0x05E1
   indir(ECON1L) = 1 << RXEN;
+  /*myMACaddress[0] = indir(MAADR1L); // Read hardwired MAC address
+  myMACaddress[1] = indir(MAADR1H);
+  myMACaddress[2] = indir(MAADR2L);
+  myMACaddress[3] = indir(MAADR2H);
+  myMACaddress[4] = indir(MAADR3L);
+  myMACaddress[5] = indir(MAADR3H);*/
 }
 #endif /* USE_ENC28J60 */
