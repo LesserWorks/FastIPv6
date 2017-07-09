@@ -2,10 +2,21 @@
 #define loadSerial(data) dataReg = (data)
 #define enableInt controlReg |= 1 << enableBit
 #define disableInt controlReg &= ~(1 << enableBit)
+ #define udr UDR0
+  #define ucsra UCSR0A
+  #define ucsrb UCSR0B
+  #define ucsrc UCSR0C
+  #define udrie UDRIE0
+  #define udre UDRE0
+  #define txc TXC0
+  #define rxc RXC0
+#define SerialTX(data, ...) udr = (data); __VA_ARGS__ ; while(!(ucsra & (1 << udre)));
+#define SerialTXend() ucsra = 1 << txc; while(!(ucsra & (1 << txc)));
+#define SerialRX(retVal, ...) udr = 0; __VA_ARGS__ ; while(!(ucsra & (1 << rxc))); (retVal) = udr;
+#define SerialRXend(retVal, ...) __VA_ARGS__ ; while(!(ucsra & (1 << rxc))); (retVal) = udr;
 
-
-#define SS_low PORTB &= ~(1 << ENCSS)
-#define SS_high PORTB |= 1 << ENCSS
+#define SS_low() SS_PORT &= ~(1 << SS_PIN_NUM)
+#define SS_high() SS_PORT |= 1 << SS_PIN_NUM
 /* SPI opcodes */
 #define RCR(address) (0b00011111U & (address))
 #define RBM 0b00111010U
