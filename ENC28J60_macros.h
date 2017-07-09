@@ -208,26 +208,26 @@
 #define FCEN1   1U
 #define FCEN0   0U
 // PHCON1
-#define PRST    15U
-#define PLOOPBK 14U
-#define PPWRSV  11U
-#define PDPXMD  8U
+#define PRST    7U
+#define PLOOPBK 6U
+#define PPWRSV  3U
+#define PDPXMD  0U
 // PHSTAT1
-#define PFDPX  12U
-#define PHDPX  11U
+#define PFDPX  4U
+#define PHDPX  3U
 #define LLSTAT 2U
 #define JBSTAT 1U
 // PHCON2
-#define FRCLNK 14U
-#define TXDIS  13U
-#define JABBER 10U
-#define HDLDIS 8U
+#define FRCLNK 6U
+#define TXDIS  5U
+#define JABBER 2U
+#define HDLDIS 0U
 // PHSTAT2
-#define TXSTAT  13U
-#define RXSTAT  12U
-#define COLSTAT 11U
-#define LSTAT   10U
-#define DPXSTAT 9U
+#define TXSTAT  5U
+#define RXSTAT  4U
+#define COLSTAT 3U
+#define LSTAT   2U
+#define DPXSTAT 1U
 #define PLRITY  5U
 // PHIE
 #define PLNKIE 4U
@@ -236,10 +236,10 @@
 #define PLNKIF 4U
 #define PGIF   2U
 // PHLCON
-#define LACFG3 11U
-#define LACFG2 10U
-#define LACFG1 9U
-#define LACFG0 8U
+#define LACFG3 3U
+#define LACFG2 2U
+#define LACFG1 1U
+#define LACFG0 0U
 #define LBCFG3 7U
 #define LBCFG2 6U
 #define LBCFG1 5U
