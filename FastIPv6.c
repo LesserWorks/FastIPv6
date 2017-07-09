@@ -2,7 +2,7 @@
 #include <avr/io.h>
 #ifdef USE_ENC28J60
   #include <ENC28J60_functions.h>
-  #include <ENC28J60_registers.h>
+  #include <ENC28J60_macros.h>
 #elif defined(ENCX24J600_SPI)
   #include <ENCX24J600_functions.h>
   #include <ENCX24J600_SPI_registers.h>
@@ -15,6 +15,29 @@
 extern uint8_t globalIPaddress*/
 #ifdef USE_ENC28J60
   // put functions definitions for ENC28J60 here
+extern void IPv6hardwareInit(void)
+{
+  IPv6reset(HARD_RESET); // Toggles reset line
+  WriteReg(ECOCON, 0); // Disbale clock out pin
+  WriteReg(ERXSTL, 0); // RX buffer starts at 0x00
+  WriteReg(ERXSTH, 0);
+  WriteReg(ERXNDL, endval & 255); // Some odd address
+  WriteReg(ERXNDH, endval >> 8);
+  WriteReg(ERXRDPTL, endval & 255);
+  WriteReg(ERXRDPTH, endval >> 8);
+  WriteReg(ERXFCON, (1 << UCEN) | (1 << CRCEN) | (1 << MCEN));
+  while(!(ReadReg(ESTAT) & (1 << CLKRDY))); // Wait till CLKRDY sets
+  WriteReg(MACON1, (1 << MARXEN) | (1 << TXPAUS) | (1 << RXPAUS));
+  // program flow control here
+  WriteReg(MACON3, (1 << PADCFG0) | (1 << TXCRCEN) | (1 << FRMLNEN) | (1 << FULDPX));
+  WriteReg(MAMXFLL, 1530U & 255U);
+  WriteReg(MAMXFLH, 1530U >> 8);
+  WriteReg(MABBIPG, 0x15);
+  WriteReg(MAIPGL, 0x12);
+  WriteReg(MAIPGL, 0x0C);
+  WritePHY(PHCON1, 1 << PDPXMD, 0);
+  // progrm MAADR registers here
+}
 #elif defined(ENCX24J600_SPI)
   // put function definitions for X24J600 SPI here
 #elif defined(ENCX24J600_PARALLEL)
