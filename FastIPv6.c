@@ -26,7 +26,7 @@ extern void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8
   WriteReg(ECOCON, 0); // Disable clock out pin
   ClearRegBit(ECON1, (1 << BSEL0) | (1 << BSEL1)); // Bank 0
   WriteReg(ERXSTL, 0); // RX buffer starts at 0x00
-  WriteReg(ERXSTH, 0);
+  WriteReg(ERXSTH, 0); // Entire buffer goes from 0-8191, so 8192 bytes (0-0x1FFF)
   WriteReg(ERXNDL, 4573U & 255); // RX buffer can hold 3 maximum length packets
   WriteReg(ERXNDH, 4573U >> 8);
   WriteReg(ERXRDPTL, 4573U & 255);
@@ -50,7 +50,7 @@ extern void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8
   WriteReg(MAMXFLH, 1530U >> 8);
   WriteReg(MABBIPG, 0x15);
   WriteReg(MAIPGL, 0x12);
-  WriteReg(MAIPGL, 0x0C);
+  WriteReg(MAIPGH, 0x0C);
   WritePHY(PHCON1, 1 << PDPXMD, 0);
   WritePHY(PHLCON, 1 << LACFG2, (1 << LBCFG2) | (1 << LBCGF1) | (1 << LBCFG0) | (1 << LRFQ0) | (1 << STRCH));
   WritePHY(PHIE, 0, (1 << PLNKIE) | (1 << PGEIE));
