@@ -59,7 +59,7 @@
 #define NOTMEEN 2U
 #define UCEN    3U
 #define RUNTEN  4U
-#define RENTEEN 5U
+#define RUNTEEN 5U
 #define CRCEN   6U
 #define CRCEEN  7U
 #define PMEN0   0U
