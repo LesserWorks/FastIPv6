@@ -4,6 +4,7 @@
 #define SerialRX(retVal, ...) udr = 0; __VA_ARGS__ ; while(!(ucsra & (1 << rxc))); (retVal) = udr;
 #define SerialRXend(retVal, ...) __VA_ARGS__ ; while(!(ucsra & (1 << rxc))); (retVal) = udr;
 
+#define RX_BUF_END 4573U
 #define SS_low() SS_PORT &= ~(1 << SS_PIN_NUM)
 #define SS_high() SS_PORT |= 1 << SS_PIN_NUM
 /* SPI opcodes */
