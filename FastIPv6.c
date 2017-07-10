@@ -15,8 +15,12 @@
 extern uint8_t globalIPaddress*/
 #ifdef USE_ENC28J60
   // put functions definitions for ENC28J60 here
-extern void IPv6hardwareInit(void)
-{
+extern void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8_t MAC0)
+{ // Microchip OUI = 0x0004A3
+  // Remember memory banks!
+  EICRA &= ~(1 << ISC20); // Configure INT2
+  EICRA |= 1 << ISC21;
+  EIMSK &= ~(1 << INT2); // Disable INT2 for now
   IPv6reset(HARD_RESET); // Toggles reset line
   WriteReg(ECOCON, 0); // Disbale clock out pin
   WriteReg(ERXSTL, 0); // RX buffer starts at 0x00
@@ -26,9 +30,11 @@ extern void IPv6hardwareInit(void)
   WriteReg(ERXRDPTL, endval & 255);
   WriteReg(ERXRDPTH, endval >> 8);
   WriteReg(ERXFCON, (1 << UCEN) | (1 << CRCEN) | (1 << MCEN));
+  WriteReg(ECON2, 1 << AUTOINC);
   while(!(ReadReg(ESTAT) & (1 << CLKRDY))); // Wait till CLKRDY sets
   WriteReg(MACON1, (1 << MARXEN) | (1 << TXPAUS) | (1 << RXPAUS));
-  // program flow control here
+  
+  // Flow control is manual
   WriteReg(MACON3, (1 << PADCFG0) | (1 << TXCRCEN) | (1 << FRMLNEN) | (1 << FULDPX));
   WriteReg(MAMXFLL, 1530U & 255U);
   WriteReg(MAMXFLH, 1530U >> 8);
@@ -36,7 +42,14 @@ extern void IPv6hardwareInit(void)
   WriteReg(MAIPGL, 0x12);
   WriteReg(MAIPGL, 0x0C);
   WritePHY(PHCON1, 1 << PDPXMD, 0);
-  // progrm MAADR registers here
+  WritePHY(PHLCON, 1 << LACFG2, (1 << LBCFG2) | (1 << LBCGF1) | (1 << LBCFG0) | (1 << LRFQ0) | (1 << STRCH));
+  WritePHY(PHIE, 0, (1 << PLNKIE) | (1 << PGEIE));
+  WriteReg(MAADR6, 0); // Microchip OUI
+  WriteReg(MAADR5, 0x04);
+  WriteReg(MAADR4, 0xA3);
+  WriteReg(MAADR3, MAC2); // User defined low 24 bits
+  WriteReg(MAADR2, MAC1);
+  WriteReg(MAADR1, MAC0);
 }
 #elif defined(ENCX24J600_SPI)
   // put function definitions for X24J600 SPI here
