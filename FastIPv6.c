@@ -27,10 +27,10 @@ extern void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8
   ClearRegBit(ECON1, (1 << BSEL0) | (1 << BSEL1)); // Bank 0
   WriteReg(ERXSTL, 0); // RX buffer starts at 0x00
   WriteReg(ERXSTH, 0); // Entire buffer goes from 0-8191, so 8192 bytes (0-0x1FFF)
-  WriteReg(ERXNDL, 4573U & 255); // RX buffer can hold 3 maximum length packets
-  WriteReg(ERXNDH, 4573U >> 8);
-  WriteReg(ERXRDPTL, 4573U & 255);
-  WriteReg(ERXRDPTH, 4573U >> 8);
+  WriteReg(ERXNDL, RX_BUF_END & 255); // RX buffer can hold 3 maximum length packets
+  WriteReg(ERXNDH, RX_BUF_END >> 8);
+  WriteReg(ERXRDPTL, RX_BUF_END & 255);
+  WriteReg(ERXRDPTH, RX_BUF_END >> 8);
   SetRegBit(ECON1, 1 << BSEL0); // Bank 1
   WriteReg(ERXFCON, (1 << UCEN) | (1 << CRCEN) | (1 << MCEN));
   WriteReg(ECON2, 1 << AUTOINC);
@@ -55,6 +55,35 @@ extern void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8
   WritePHY(PHLCON, 1 << LACFG2, (1 << LBCFG2) | (1 << LBCGF1) | (1 << LBCFG0) | (1 << LRFQ0) | (1 << STRCH));
   WritePHY(PHIE, 0, (1 << PLNKIE) | (1 << PGEIE));
   // Write in premade packets here
+  ClearRegBits(ECON1, (1 << BSEL1) | (1 << BSEL0)); // Bank 0
+  WriteReg(ERDPTL, TX_BUF_ST & 255); // Write pointer at control byte
+  WriteReg(ERDPTH, TX_BUF_ST >> 8);
+  SS_low(); // Writing in generic headers to speed up transmission
+  SerialTX(0); // control byte
+  // Ethernet header
+  SerialTX(0); // Destination MAC 5
+  SerialTX(0); // DM4
+  SerialTX(0); // DM3
+  SerialTX(0); // DM2
+  SerialTX(0); // DM1
+  SerialTX(0); // DM0
+  SerialTX(0); // Source MAC 5
+  SerialTX(0x04); // Source MAC 4
+  SerialTX(0xA3); // Source MAC 3
+  SerialTX(MAC2); // Source MAC 2
+  SerialTX(MAC1); // Source MAC 1
+  SerialTX(MAC0); // Source MAC 0
+  SerialTX(0x86); // Ethertype
+  SerialTX(0xDD);
+  // IP header
+  SerialTX(6U << 4); // Version
+  SerialTX(0); // Traffic class and flow label
+  SerialTX(0); // Flow label
+  SerialTX(0);
+  SerialTX(0); // Payload length
+  SerialTX(0);
+  SerialTX(0); // Next header
+  SerialTX(255U); // Hop limit
 }
 extern void IPv6hardwareSleep(void)
 {
