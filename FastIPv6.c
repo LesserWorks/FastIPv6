@@ -51,6 +51,23 @@ extern void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8
   WriteReg(MAADR2, MAC1);
   WriteReg(MAADR1, MAC0);
 }
+extern void IPv6hardwareSleep(void)
+{
+  ClearRegBit(ECON1, 1 << RXEN);
+  while(ReadReg(ESTAT) & (1 << RXBUSY)); // wait for RXBUSY to clear
+  while(ReadReg(ECON1), (1 << TXRTS)); // wait for TXRTS to clear
+  SetRegBit(ECON2, 1 << VRPS);
+  SetRegBit(ECON2, 1 << PWRSV);
+  return;
+}
+extern void IPv6hardwareWake(void)
+{
+  ClearRegBit(ECON2, 1 << PWRSV);
+  while(!(ReadReg(ESTAT) & (1 << CLKRDY))); // Wait for CLKRDY to set
+  SetRegBit(ECON1, 1 << RXEN);
+  return;
+}
+  
 #elif defined(ENCX24J600_SPI)
   // put function definitions for X24J600 SPI here
 #elif defined(ENCX24J600_PARALLEL)
