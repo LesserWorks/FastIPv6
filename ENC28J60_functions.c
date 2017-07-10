@@ -1,6 +1,6 @@
 #include <FastIPv6_config.h>
 #include <ENC28J60_functions.h>
-#include <ENC28J60_registers.h>
+#include <ENC28J60_macros.h>
 
 extern void WriteReg(const uint8_t registerName, const uint8_t data)
 {
