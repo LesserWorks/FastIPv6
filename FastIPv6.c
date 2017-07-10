@@ -22,18 +22,28 @@ extern void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8
   EICRA |= 1 << ISC21;
   EIMSK &= ~(1 << INT2); // Disable INT2 for now
   IPv6reset(HARD_RESET); // Toggles reset line
-  WriteReg(ECOCON, 0); // Disbale clock out pin
+  SetRegBit(ECON1, (1 << BSEL0) | (1 << BSEL1)); // Bank 3
+  WriteReg(ECOCON, 0); // Disable clock out pin
+  ClearRegBit(ECON1, (1 << BSEL0) | (1 << BSEL1)); // Bank 0
   WriteReg(ERXSTL, 0); // RX buffer starts at 0x00
   WriteReg(ERXSTH, 0);
-  WriteReg(ERXNDL, endval & 255); // Some odd address
-  WriteReg(ERXNDH, endval >> 8);
-  WriteReg(ERXRDPTL, endval & 255);
-  WriteReg(ERXRDPTH, endval >> 8);
+  WriteReg(ERXNDL, 4573U & 255); // RX buffer can hold 3 maximum length packets
+  WriteReg(ERXNDH, 4573U >> 8);
+  WriteReg(ERXRDPTL, 4573U & 255);
+  WriteReg(ERXRDPTH, 4573U >> 8);
+  SetRegBit(ECON1, 1 << BSEL0); // Bank 1
   WriteReg(ERXFCON, (1 << UCEN) | (1 << CRCEN) | (1 << MCEN));
   WriteReg(ECON2, 1 << AUTOINC);
   while(!(ReadReg(ESTAT) & (1 << CLKRDY))); // Wait till CLKRDY sets
+  SetRegBit(ECON1, 1 << BSEL1); // Bank 3
+  WriteReg(MAADR6, 0); // Microchip OUI
+  WriteReg(MAADR5, 0x04);
+  WriteReg(MAADR4, 0xA3);
+  WriteReg(MAADR3, MAC2); // User defined low 24 bits
+  WriteReg(MAADR2, MAC1);
+  WriteReg(MAADR1, MAC0);
+  ClearRegBit(ECON1, 1 << BSEL0); // Bank 2
   WriteReg(MACON1, (1 << MARXEN) | (1 << TXPAUS) | (1 << RXPAUS));
-  
   // Flow control is manual
   WriteReg(MACON3, (1 << PADCFG0) | (1 << TXCRCEN) | (1 << FRMLNEN) | (1 << FULDPX));
   WriteReg(MAMXFLL, 1530U & 255U);
@@ -44,12 +54,7 @@ extern void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8
   WritePHY(PHCON1, 1 << PDPXMD, 0);
   WritePHY(PHLCON, 1 << LACFG2, (1 << LBCFG2) | (1 << LBCGF1) | (1 << LBCFG0) | (1 << LRFQ0) | (1 << STRCH));
   WritePHY(PHIE, 0, (1 << PLNKIE) | (1 << PGEIE));
-  WriteReg(MAADR6, 0); // Microchip OUI
-  WriteReg(MAADR5, 0x04);
-  WriteReg(MAADR4, 0xA3);
-  WriteReg(MAADR3, MAC2); // User defined low 24 bits
-  WriteReg(MAADR2, MAC1);
-  WriteReg(MAADR1, MAC0);
+  // Write in premade packets here
 }
 extern void IPv6hardwareSleep(void)
 {
