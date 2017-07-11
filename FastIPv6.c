@@ -15,7 +15,7 @@
 extern uint8_t globalIPaddress*/
 #ifdef USE_ENC28J60
   // put functions definitions for ENC28J60 here
-extern void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8_t MAC0)
+void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8_t MAC0)
 { // Microchip OUI = 0x0004A3
   // Remember memory banks!
   EICRA &= ~(1 << ISC20); // Configure INT2
@@ -75,6 +75,197 @@ extern void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8
   SerialTX(MAC0); // Source MAC 0
   SerialTX(0x86); // Ethertype
   SerialTX(0xDD);
+  SerialTXend();
+  SS_high();
+  WriteReg(ERDPTL, 7972U & 255); // Other headers start here
+  WriteReg(ERDPTH, 7972U >> 8);
+  SS_low();
+  // Neighbor advertisement
+  SerialTX(136); // Type
+  SerialTX(0); // Code
+  SerialTX(0); // Checksum
+  SerialTX(0);
+  SerialTX(0); // Flags
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0); // Target address
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(2); // Type of options header
+  SerialTX(1); // Length of options
+  SerialTX(0); // Source MAC 5
+  SerialTX(0x04); // Source MAC 4
+  SerialTX(0xA3); // Source MAC 3
+  SerialTX(MAC2); // Source MAC 2
+  SerialTX(MAC1); // Source MAC 1
+  SerialTX(MAC0); // Source MAC 0
+  // Neighbor solicitation
+  SerialTX(135); // Type
+  SerialTX(code); // Code
+  SerialTX(0); // Checksum
+  SerialTX(0);
+  SerialTX(0); // Zeros
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0); // Target address
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(1); // Type of options header
+  SerialTX(1); // Length of options
+  SerialTX(0); // Source MAC 5
+  SerialTX(0x04); // Source MAC 4
+  SerialTX(0xA3); // Source MAC 3
+  SerialTX(MAC2); // Source MAC 2
+  SerialTX(MAC1); // Source MAC 1
+  SerialTX(MAC0); // Source MAC 0
+  // Router solicitation
+  SerialTX(133); // Type
+  SerialTX(code); // Code
+  SerialTX(0); // Checksum
+  SerialTX(0);
+  SerialTX(0); // Zeros
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(1); // Type of options header
+  SerialTX(1); // Length of options
+  SerialTX(0); // Source MAC 5
+  SerialTX(0x04); // Source MAC 4
+  SerialTX(0xA3); // Source MAC 3
+  SerialTX(MAC2); // Source MAC 2
+  SerialTX(MAC1); // Source MAC 1
+  SerialTX(MAC0); // Source MAC 0
+  // ICMP pseudo header
+  SerialTX(0xFE); // Start with our link local address
+  SerialTX(128);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0x02); // EUI-64
+  SerialTX(0x04);
+  SerialTX(0xA3);
+  SerialTX(0xFF);
+  SerialTX(0xFE);
+  SerialTX(MAC2);
+  SerialTX(MAC1);
+  SerialTX(MAC0);
+  SerialTX(0xFF); // Destination address (start with all-routers address)
+  SerialTX(0x02);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0x02);
+  SerialTX(0); // Length for router solicitation
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(16);
+  SerialTX(0); // Zeros
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(58); // Next header for ICMP
+  // TCP pseudo header
+  SerialTX(0); // Source IP
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0); // Destination address
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0); // Length
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0); // Zeros
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(6); // Next header for TCP
+  // TCP header
+  SerialTX(0); // Source port
+  SerialTX(80);
+  SerialTX(0); // Destination port
+  SerialTX(0);
+  SerialTX(0); // Sequence number
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0); // Acknowledge number
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(5 << 4); // Data offset
+  SerialTX(0); // flags
+  SerialTX(0); // Window size
+  SerialTX(0);
+  SerialTX(0); // Checksum
+  SerialTX(0);
+  SerialTX(0); // Urgent pointer
+  SerialTX(0);
   // IP header
   SerialTX(6U << 4); // Version
   SerialTX(0); // Traffic class and flow label
@@ -84,6 +275,40 @@ extern void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8
   SerialTX(0);
   SerialTX(0); // Next header
   SerialTX(255U); // Hop limit
+  SerialTX(0); // Source IP
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0); // Destination address
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0);
+  SerialTX(0); // By here we should be at byte 8191, the last of the buffer
+  SerialTXend();
+  SS_high();
 }
 extern void IPv6hardwareSleep(void)
 {
