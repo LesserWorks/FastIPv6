@@ -26,5 +26,43 @@ void initENC(void)
   UCSR1A = 0;
   UCSR1C = (1 << UMSEL11) | (1 << UMSEL10); // USART in SPI mode
   UCSR1B = (1 << RXEN1) | (1 << TXEN1);
- 
+  
+  SS_low();
+  SS_high();
 }
+void prints(const uint8_t message[len])
+{
+  for(uint8_t i = 0; message[i]; ++i)
+  {
+    UDR0 = message[i];
+    while(!(UCSR0A & (1 << UDRE0)));
+  }
+  return;
+}
+void printb(const uint8_t txb)
+{
+  UDR0 = txb;
+  while(!(UCSR0A & (1 << UDRE0)));
+  return;
+}
+uint8_t getb(void)
+{
+  while(!(UCSR0A & (1 << RXC0)));
+  return UDR0;
+}
+void setup()
+{
+  initENC();
+  prints("ENC28J60 test. Press I for instructions.\r\n");
+}
+void loop()
+{
+  switch(getb())
+  {
+    case 'W':
+      gh;
+    case 'R':
+      gh;
+    default:
+      prints("Unrecognized command.\r\n");
+      
