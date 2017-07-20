@@ -8,6 +8,8 @@
 #define RX_BUF_END 4573U
 #define SS_low() SS_PORT &= ~(1 << SS_PIN_NUM)
 #define SS_high() SS_PORT |= 1 << SS_PIN_NUM
+#define RST_low() RST_PORT &= ~(1 << RST_PIN_NUM)
+#define RST_high() RST_PORT |= 1 << RST_PIN_NUM
 /* SPI opcodes */
 #define RCR(address) (0b00011111U & (address))
 #define RBM 0b00111010U
