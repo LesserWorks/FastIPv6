@@ -1,9 +1,10 @@
 /* Macro functions for USART in SPI mode */
-#define SerialTX(data, ...) udr = (data); __VA_ARGS__ ; while(!(ucsra & (1 << udre)));
-#define SerialTXend() ucsra = 1 << txc; while(!(ucsra & (1 << txc)));
-#define SerialRX(retVal, ...) udr = 0; __VA_ARGS__ ; while(!(ucsra & (1 << rxc))); (retVal) = udr;
-#define SerialRXend(retVal, ...) __VA_ARGS__ ; while(!(ucsra & (1 << rxc))); (retVal) = udr;
+#define SerialTX(data, ...) UDR1 = (data); __VA_ARGS__ ; while(!(UCSR1A & (1 << UDRE1)));
+#define SerialTXend() UCSR1A = 1 << TXC1; while(!(UCSR1A & (1 << TXC1)));
+#define SerialRX(retVal, ...) UDR1 = 0; __VA_ARGS__ ; while(!(UCSR1A & (1 << RXC1))); (retVal) = UDR1;
+#define SerialRXend(retVal, ...) __VA_ARGS__ ; while(!(UCSR1A & (1 << RXC1))); (retVal) = UDR1;
 
+ 
 #define RX_BUF_END 4573U
 #define SS_low() SS_PORT &= ~(1 << SS_PIN_NUM)
 #define SS_high() SS_PORT |= 1 << SS_PIN_NUM
@@ -81,11 +82,14 @@
 #define EPMCSH  0x11U
 #define EPMOL   0x14U
 #define EPMOH   0x15U
+#define EWOLIE  0x16U // Deprecated, do not use
+#define EWOLIR  0x17U // Deprecated, do not use
 #define ERXFCON 0x18U
 #define EPKTCNT 0x19U
 
 /* Bank 2 */
 #define MACON1   0x00U
+#define MACON2   0x01U // Deprecated, do not use
 #define MACON3   0x02U
 #define MACON4   0x03U
 #define MABBIPG  0x04U
@@ -95,6 +99,8 @@
 #define MACLCON2 0x09U
 #define MAMXFLL  0x0AU
 #define MAMXFLH  0x0BU
+#define MAPHSUP  0x0DU // Deprecated, do not use
+#define MICON    0x11U // Deprecated, do not use
 #define MICMD    0x12U
 #define MIREGADR 0x14U
 #define MIWRL    0x16U
@@ -127,6 +133,7 @@
 #define DMAIE  5U
 #define LINKIE 4U
 #define TXIE   3U
+#define WOLIE  2U // Deprecated, do not use
 #define TXERIE 1U
 #define RXERIE 0U
 // EIR
@@ -134,6 +141,7 @@
 #define DMAIF  5U
 #define LINKIF 4U
 #define TXIF   3U
+#define WOLIF  2U // Deprecated, do not use
 #define TXERIF 1U
 #define RXERIF 0U
 // ESTAT
@@ -157,6 +165,22 @@
 #define RXEN   2U
 #define BSEL1  1U
 #define BSEL0  0U
+// EWOLIE // Deprecated, do not use
+#define UCWOLIE 7U
+#define AWOLIE  6U
+#define PMWOLIE 4U
+#define MPWOLIE 3U
+#define HTWOLIE 2U
+#define MCWOLIE 1U
+#define BCWOLIE 0U
+// EWOLIR // Deprecated, do not use
+#define UCWOLIF 7U
+#define AWOLIF  6U
+#define PMWOLIF 4U
+#define MPWOLIF 3U
+#define HTWOLIF 2U
+#define MCWOLIF 1U
+#define BCWOLIF 0U
 // ERXFCON
 #define UCEN  7U
 #define ANDOR 6U
@@ -171,6 +195,13 @@
 #define RXPAUS  2U
 #define PASSALL 1U
 #define MARXEN  0U
+// MACON2 // Deprecated, do not use
+#define MARST   7U
+#define RNDRST  6U
+#define MARXRST 3U
+#define RFUNRST 2U
+#define MATXRST 1U
+#define TFUNRST 0U
 // MACON3
 #define PADCFG2 7U
 #define PADCFG1 6U
@@ -184,6 +215,13 @@
 #define DEFER   6U
 #define BPEN    5U
 #define NOBKOFF 4U
+#define LONGPRE 1U // Deprecated, do not use
+#define PUREPRE 0U // Deprecated, do not use
+// MAPHSUP // Deprecated, do not use
+#define RSTINTFC 7U
+#define RSTRMII  3U
+// MICON // Deprecated, do not use
+#define RSTMII 7U
 // MICMD
 #define MIISCAN 1U
 #define MIIRD   0U
