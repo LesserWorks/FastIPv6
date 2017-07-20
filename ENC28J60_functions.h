@@ -1,6 +1,13 @@
 #ifndef ENC28J60_FUNCTIONS_H // Include guard
 #define ENC28J60_FUNCTIONS_H
+
+#define setBank0() ClearRegBit(ECON1, (1 << BSEL1) | (1 << BSEL0));
+#define setBank1() ClearRegBit(ECON1, 1 << BSEL1); SetRegBit(ECON1, 1 << BSEL0);
+#define setBank2() ClearRegBit(ECON1, 1 << BSEL0); SetRegBit(ECON1, 1 << BSEL1);
+#define setBank3() SetRegBit(ECON1, (1 << BSEL1) | (1 << BSEL0));
+
 extern void WriteReg(const uint8_t registerName, const uint8_t data);
+extern void WriteRegDelayed(const uint8_t registerName, const uint8_t data);
 
 extern uint8_t ReadReg(const uint8_t registerName);
 
