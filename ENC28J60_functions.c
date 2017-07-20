@@ -11,6 +11,16 @@ extern void WriteReg(const uint8_t registerName, const uint8_t data)
   SS_high();
   return;
 }
+extern void WriteRegDelayed(const uint8_t registerName, const uint8_t data) // Use when writing to MAC or MII regs
+{
+  SS_low();
+  SerialTX(WCR(registerName));
+  SerialTX(data);
+  SerialTXend();
+  asm volatile("rjmp .+0\n\t" // Waste 4 clock cycles before raising SS.
+               "rjmp .+0\n\t" // We need 210 ns from last SCK cycle to SS high.
+                ::);
+  SS_high(); // This take 2 cycles (sbi)
 extern uint8_t ReadReg(const uint8_t registerName)
 {
   SS_low();
@@ -51,24 +61,24 @@ extern void ClearRegBit(const uint8_t registerName, const uint8_t data)
 extern void WritePHY(const uint8_t registerName, const uint8_t dataH, const uint8_t dataL)
 {
   while(ReadRegDelayed(MISTAT) & (1 << BUSY)); // Wait till BUSY bit clears
-  WriteReg(MIREGADR, registerName);
-  WriteReg(MIWRL, dataL);
-  WriteReg(MIWRH, dataH);
+  WriteRegDelayed(MIREGADR, registerName);
+  WriteRegDelayed(MIWRL, dataL);
+  WriteRegDelayed(MIWRH, dataH);
   return;
 }
 extern uint16_t ReadPHY(const uint8_t registerName)
 {
   while(ReadRegDelayed(MISTAT) & (1 << BUSY)); // Wait till BUSY bit clears
-  WriteReg(MIREGADR, registerName);
-  WriteReg(MICMD, 1 << MIIRD);
+  WriteRegDelayed(MIREGADR, registerName);
+  WriteRegDelayed(MICMD, 1 << MIIRD);
   while(ReadRegDelayed(MISTAT) & (1 << BUSY)); // Wait till BUSY bit clears
   return (((uint16_t)ReadRegDelayed(MIRDH)) << 8) | ReadRegDelayed(MIRDL);
 }
 extern void StartPHYscan(const uint8_t registerName)
 {
   while(ReadRegDelayed(MISTAT) & (1 << BUSY)); // Wait till BUSY bit clears
-  WriteReg(MIREGADR, registerName);
-  WriteReg(MICMD, 1 << MIISCAN);
+  WriteRegDelayed(MIREGADR, registerName);
+  WriteRegDelayed(MICMD, 1 << MIISCAN);
   while(ReadRegDelayed(MISTAT) & (1 << NVALID)); // Wait till NVALID bit clears
   return;
 }
@@ -85,7 +95,7 @@ extern uint8_t ReadPHYscan(const uint8_t whichByte)
 }
 extern void StopPHYscan(void)
 {
-  WriteReg(MICMD, 0);
+  WriteRegDelayed(MICMD, 0);
   return;
 }
 extern void IPv6reset(const uint8_t resetType)
