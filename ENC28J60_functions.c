@@ -60,7 +60,9 @@ extern void ClearRegBit(const uint8_t registerName, const uint8_t data)
 }
 extern void WritePHY(const uint8_t registerName, const uint8_t dataH, const uint8_t dataL)
 {
+  setBank3();
   while(ReadRegDelayed(MISTAT) & (1 << BUSY)); // Wait till BUSY bit clears
+  setBank2();
   WriteRegDelayed(MIREGADR, registerName);
   WriteRegDelayed(MIWRL, dataL);
   WriteRegDelayed(MIWRH, dataH);
@@ -68,22 +70,30 @@ extern void WritePHY(const uint8_t registerName, const uint8_t dataH, const uint
 }
 extern uint16_t ReadPHY(const uint8_t registerName)
 {
+  setBank3();
   while(ReadRegDelayed(MISTAT) & (1 << BUSY)); // Wait till BUSY bit clears
+  setBank2();
   WriteRegDelayed(MIREGADR, registerName);
   WriteRegDelayed(MICMD, 1 << MIIRD);
+  setBank3();
   while(ReadRegDelayed(MISTAT) & (1 << BUSY)); // Wait till BUSY bit clears
+  setBank2();
   return (((uint16_t)ReadRegDelayed(MIRDH)) << 8) | ReadRegDelayed(MIRDL);
 }
 extern void StartPHYscan(const uint8_t registerName)
 {
+  setBank3();
   while(ReadRegDelayed(MISTAT) & (1 << BUSY)); // Wait till BUSY bit clears
+  setBank2();
   WriteRegDelayed(MIREGADR, registerName);
   WriteRegDelayed(MICMD, 1 << MIISCAN);
+  setBank3();
   while(ReadRegDelayed(MISTAT) & (1 << NVALID)); // Wait till NVALID bit clears
   return;
 }
 extern uint8_t ReadPHYscan(const uint8_t whichByte)
 {
+  setBank2();
   if(whichByte)
   {
     return ReadRegDelayed(MIRDH);
@@ -95,6 +105,7 @@ extern uint8_t ReadPHYscan(const uint8_t whichByte)
 }
 extern void StopPHYscan(void)
 {
+  setBank2();
   WriteRegDelayed(MICMD, 0);
   return;
 }
