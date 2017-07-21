@@ -3,6 +3,7 @@
 #define SerialTXend() UCSR1A = 1 << TXC1; while(!(UCSR1A & (1 << TXC1)));
 #define SerialRX(retVal, ...) UDR1 = 0; __VA_ARGS__ ; while(!(UCSR1A & (1 << RXC1))); (retVal) = UDR1;
 #define SerialRXend(retVal, ...) __VA_ARGS__ ; while(!(UCSR1A & (1 << RXC1))); (retVal) = UDR1;
+#define SerialRXflush() while(UCSR1A & (1 << RXC1)) { uint8_t trashByte = UDR1; }
 
  
 #define RX_BUF_END 4573U
