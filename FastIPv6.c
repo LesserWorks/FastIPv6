@@ -61,6 +61,7 @@ void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8_t MAC0
   WriteReg(ERDPTL, TX_BUF_ST & 255); // Write pointer at control byte
   WriteReg(ERDPTH, TX_BUF_ST >> 8);
   SS_low(); // Writing in generic headers to speed up transmission
+  SerialTX(WBM);
   SerialTX(0); // control byte
   // Ethernet header
   SerialTX(0); // Destination MAC 5
@@ -82,6 +83,7 @@ void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8_t MAC0
   WriteReg(ERDPTL, 7972U & 255); // Other headers start here
   WriteReg(ERDPTH, 7972U >> 8);
   SS_low();
+  SerialTX(WBM);
   // Neighbor advertisement
   SerialTX(136); // Type
   SerialTX(0); // Code
