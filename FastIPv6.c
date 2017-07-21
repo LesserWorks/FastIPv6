@@ -58,8 +58,8 @@ void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8_t MAC0
   WritePHY(PHIE, 0, (1 << PLNKIE) | (1 << PGEIE));
   // Write in premade packets here
   ClearRegBits(ECON1, (1 << BSEL1) | (1 << BSEL0)); // Bank 0
-  WriteReg(ERDPTL, TX_BUF_ST & 255); // Write pointer at control byte
-  WriteReg(ERDPTH, TX_BUF_ST >> 8);
+  WriteReg(EWRPTL, TX_BUF_ST & 255); // Write pointer at control byte
+  WriteReg(EWRPTH, TX_BUF_ST >> 8);
   SS_low(); // Writing in generic headers to speed up transmission
   SerialTX(WBM);
   SerialTX(0); // control byte
@@ -80,8 +80,8 @@ void IPv6hardwareInit(const uint8_t MAC2, const uint8_t MAC1, const uint8_t MAC0
   SerialTX(0xDD);
   SerialTXend();
   SS_high();
-  WriteReg(ERDPTL, 7972U & 255); // Other headers start here
-  WriteReg(ERDPTH, 7972U >> 8);
+  WriteReg(EWRPTL, 7972U & 255); // Other headers start here
+  WriteReg(EWRPTH, 7972U >> 8);
   SS_low();
   SerialTX(WBM);
   // Neighbor advertisement
